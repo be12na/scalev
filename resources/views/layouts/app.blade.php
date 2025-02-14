@@ -5,7 +5,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta name="csrf-token" content="{{ csrf_token() }}">
 
-        <title>{{ config('app.name', 'Laravel') }}</title>
+        <title>{{ setting('nama_web', 'Web name') }}</title>
 
         <!-- Fonts -->
         <link rel="preconnect" href="https://fonts.bunny.net">
@@ -29,8 +29,30 @@
 
             <!-- Page Content -->
             <main>
+                @if (session('success'))
+                <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
+                    <div class="p-4 mt-4 text-sm text-green-800 rounded-lg bg-green-50 dark:bg-gray-800 dark:text-green-400" role="alert">
+                        {{ session('success') }}
+                    </div>
+                </div>
+                @endif
+
+                @error('content')
+                <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
+
+                    <div class="p-4 mt-4 text-sm text-red-800 rounded-lg bg-red-50 dark:bg-gray-800 dark:text-red-400" role="alert">
+                        {{ $message }}
+                    </div>
+
+                </div>
+                @enderror
+
+                
+                
                 {{ $slot }}
             </main>
         </div>
+
+        @stack('js')
     </body>
 </html>

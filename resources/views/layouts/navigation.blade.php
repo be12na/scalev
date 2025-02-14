@@ -6,7 +6,8 @@
                 <!-- Logo -->
                 <div class="shrink-0 flex items-center">
                     <a href="{{ route('dashboard') }}">
-                        <x-application-logo class="block h-9 w-auto fill-current text-gray-800" />
+                        <img src="{{asset('storage/'.setting('logo', 'Default Name'))}}" class="h-9" alt="">
+                        {{-- <x-application-logo class="block h-9 w-auto fill-current text-gray-800" /> --}}
                     </a>
                 </div>
 
@@ -15,6 +16,18 @@
                     <x-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')">
                         {{ __('Dashboard') }}
                     </x-nav-link>
+
+                    <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
+                        <x-nav-link :href="route('user.index')" :active="request()->routeIs('user.*')">
+                            {{ __('User') }}
+                        </x-nav-link>
+                    </div>
+    
+                    <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
+                        <x-nav-link :href="route('setting.index')" :active="request()->routeIs('setting.*')">
+                            {{ __('Setting') }}
+                        </x-nav-link>
+                    </div>
                 </div>
             </div>
 
@@ -69,6 +82,14 @@
         <div class="pt-2 pb-3 space-y-1">
             <x-responsive-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')">
                 {{ __('Dashboard') }}
+            </x-responsive-nav-link>
+
+            <x-responsive-nav-link :href="route('user.index')" :active="request()->routeIs('user.*')">
+                {{ __('User') }}
+            </x-responsive-nav-link>
+
+            <x-responsive-nav-link :href="route('setting.index')" :active="request()->routeIs('setting.*')">
+                {{ __('Setting') }}
             </x-responsive-nav-link>
         </div>
 
