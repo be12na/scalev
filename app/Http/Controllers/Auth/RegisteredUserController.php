@@ -10,6 +10,7 @@ use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Validation\Rules;
 use Illuminate\View\View;
@@ -29,6 +30,29 @@ class RegisteredUserController extends Controller
      *
      * @throws \Illuminate\Validation\ValidationException
      */
+
+     private function sendWa($name,$email,$username,$wa){
+
+        $pesan = "Halo, *".$name."*\nKami dengan senang hati menyambut Anda sebagai bagian dari tim kami.\n\nUsername Anda : *".$username."*\nEmail anda : *".$email."*\nNo. WhatsApp Anda : *".$wa."* \n\nKami berharap Anda dapat memberikan kontribusi terbaik dan berkembang bersama kami.\nJika ada pertanyaan, jangan ragu untuk menghubungi tim HRD kami";
+
+        $url = 'https://wa4307.cloudwa.my.id/api/v1/messages';
+        $token = 'u5638a6c7962f407.0541d180357043edb2710574e1199043';
+        $nowa = $wa;
+
+        $response = Http::withToken($token)
+            ->withHeaders(['Content-Type' => 'application/json'])
+            ->post($url, [
+                'recipient_type' => 'individual',
+                'to' => $nowa,
+                'type' => 'text',
+                'text' => [
+                    'body' => $pesan 
+                ]
+            ]);
+
+        return $response;
+    
+    }
     public function store(Request $request): RedirectResponse
     {
         $request->validate([
@@ -66,6 +90,9 @@ class RegisteredUserController extends Controller
         Auth::login($user);
 
         Mail::to($user->email)->send(new UserBaruMail($user));
+
+        
+        $this->sendWa($user->name,$user->email,$user->username,$user->whatsapp);
 
         return redirect(route('dashboard', absolute: false));
     }

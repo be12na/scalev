@@ -4,10 +4,12 @@ namespace App\Http\Controllers;
 
 use App\Mail\UserBaruMail;
 use App\Models\User;
+use App\Notifications\PesanWhatsApp;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Validation\Rule;
 
@@ -16,6 +18,29 @@ use Illuminate\Validation\Rules;
 
 class UserController extends Controller
 {
+    private function sendWa($name,$email,$username,$wa){
+
+        $pesan = "Halo, *".$name."*\nKami dengan senang hati menyambut Anda sebagai bagian dari tim kami.\n\nUsername Anda : *".$username."*\nEmail anda : *".$email."*\nNo. WhatsApp Anda : *".$wa."* \n\nKami berharap Anda dapat memberikan kontribusi terbaik dan berkembang bersama kami.\nJika ada pertanyaan, jangan ragu untuk menghubungi tim HRD kami";
+
+        $url = 'https://wa4307.cloudwa.my.id/api/v1/messages';
+        $token = 'u5638a6c7962f407.0541d180357043edb2710574e1199043';
+        $nowa = $wa;
+
+        $response = Http::withToken($token)
+            ->withHeaders(['Content-Type' => 'application/json'])
+            ->post($url, [
+                'recipient_type' => 'individual',
+                'to' => $nowa,
+                'type' => 'text',
+                'text' => [
+                    'body' => $pesan 
+                ]
+            ]);
+
+        return $response;
+    
+    }
+
     public function index(Request $request) {
 
         $dataList = User::orderBy('created_at','desc');
@@ -87,6 +112,8 @@ class UserController extends Controller
 
         Mail::to($user->email)->send(new UserBaruMail($user));
 
+        $this->sendWa($user->name,$user->email,$user->username,$user->whatsapp);
+
         return redirect()->route('user.index')->with('success', 'User created successfully!');
        
     }
@@ -148,6 +175,16 @@ class UserController extends Controller
         $user->save();
 
         Mail::to($user->email)->send(new UserBaruMail($user));
+
+        $this->sendWa($user->name,$user->email,$user->username,$user->whatsapp);
+     
+         
+
+        // dd(response()->json($response->json()));
+    
+        
+
+        
        
         return redirect()->route('user.index')->with('success', 'User updated successfully!');
 

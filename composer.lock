@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "d6c083b04e73afd8ea1cc978bddab18d",
+    "content-hash": "d4f3524c11833a3849e03f63788df28c",
     "packages": [
         {
             "name": "brick/math",
@@ -2507,6 +2507,47 @@
                 }
             ],
             "time": "2024-11-21T10:39:51+00:00"
+        },
+        {
+            "name": "pasya/onesender-laravel",
+            "version": "0.1.2",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/onesender/onesender-laravel.git",
+                "reference": "2d7fa07112bfb2395da5cf737984cc7a3536558e"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/onesender/onesender-laravel/zipball/2d7fa07112bfb2395da5cf737984cc7a3536558e",
+                "reference": "2d7fa07112bfb2395da5cf737984cc7a3536558e",
+                "shasum": ""
+            },
+            "type": "library",
+            "extra": {
+                "laravel": {
+                    "providers": [
+                        "Pasya\\OneSenderLaravel\\OneSenderServiceProvider"
+                    ]
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Pasya\\OneSenderLaravel\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "authors": [
+                {
+                    "name": "Ali",
+                    "email": "webstoryinc@gmail.com"
+                }
+            ],
+            "description": "Integrasi OneSender ke laravel",
+            "support": {
+                "issues": "https://github.com/onesender/onesender-laravel/issues",
+                "source": "https://github.com/onesender/onesender-laravel/tree/0.1.2"
+            },
+            "time": "2022-09-05T21:04:56+00:00"
         },
         {
             "name": "phpoption/phpoption",
