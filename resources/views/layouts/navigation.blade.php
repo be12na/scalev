@@ -17,17 +17,22 @@
                         {{ __('Dashboard') }}
                     </x-nav-link>
 
+                    @role('superadmin')
                     <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
                         <x-nav-link :href="route('user.index')" :active="request()->routeIs('user.*')">
                             {{ __('User') }}
                         </x-nav-link>
                     </div>
+
+                    
     
                     <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
                         <x-nav-link :href="route('setting.index')" :active="request()->routeIs('setting.*')">
                             {{ __('Setting') }}
                         </x-nav-link>
                     </div>
+
+                    @endrole
                 </div>
             </div>
 
@@ -84,6 +89,7 @@
                 {{ __('Dashboard') }}
             </x-responsive-nav-link>
 
+            @role('superadmin')
             <x-responsive-nav-link :href="route('user.index')" :active="request()->routeIs('user.*')">
                 {{ __('User') }}
             </x-responsive-nav-link>
@@ -91,6 +97,8 @@
             <x-responsive-nav-link :href="route('setting.index')" :active="request()->routeIs('setting.*')">
                 {{ __('Setting') }}
             </x-responsive-nav-link>
+
+            @endrole
         </div>
 
         <!-- Responsive Settings Options -->

@@ -85,14 +85,18 @@ class RegisteredUserController extends Controller
             'password' => Hash::make($request->password),
         ]);
 
-        event(new Registered($user));
-
-        Auth::login($user);
+        $user->assignRole('member');
 
         Mail::to($user->email)->send(new UserBaruMail($user));
 
         
         $this->sendWa($user->name,$user->email,$user->username,$user->whatsapp);
+
+        event(new Registered($user));
+
+        Auth::login($user);
+
+        
 
         return redirect(route('dashboard', absolute: false));
     }

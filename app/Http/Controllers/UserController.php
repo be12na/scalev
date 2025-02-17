@@ -37,6 +37,8 @@ class UserController extends Controller
                 ]
             ]);
 
+        // dd($response->json());
+
         return $response;
     
     }
@@ -174,7 +176,7 @@ class UserController extends Controller
 
         $user->save();
 
-        Mail::to($user->email)->send(new UserBaruMail($user));
+        // Mail::to($user->email)->send(new UserBaruMail($user));
 
         $this->sendWa($user->name,$user->email,$user->username,$user->whatsapp);
      
